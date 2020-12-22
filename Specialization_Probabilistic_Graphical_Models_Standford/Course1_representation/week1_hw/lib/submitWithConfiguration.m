@@ -1,7 +1,7 @@
 function submitWithConfiguration(conf)
   addpath('./lib/jsonlab');
 
-  parts = parts(conf);
+  Parts = parts(conf);
 
   fprintf('== Submitting solutions | %s...\n', conf.itemName);
 
@@ -19,7 +19,7 @@ function submitWithConfiguration(conf)
   end
 
   try
-    response = submitParts(conf, email, token, parts);
+    response = submitParts(conf, email, token, Parts);
   catch
     e = lasterror();
     fprintf( ...
@@ -59,12 +59,28 @@ function isValid = isValidPartOptionIndex(partOptions, i)
   isValid = (~isempty(i)) && (1 <= i) && (i <= numel(partOptions));
 end
 
-function response = submitParts(conf, email, token, parts)
-  body = makePostBody(conf, email, token, parts);
-  submissionUrl = submissionUrl();
-  params = {'jsonBody', body};
-  responseBody = urlread(submissionUrl, 'post', params);
-  response = loadjson(responseBody);
+function response = submitParts(conf, email, token, parts) 
+
+  body = makePostBody(conf, email, token, parts); 
+
+  submissionUrlist = submissionUrl(); 
+
+  params = {'jsonBody', body}; 
+
+  respFile='tmpfile.txt'; 
+
+  fid=fopen(respFile,'w'); 
+
+  fprintf(fid,'jsonBody=%s', body); 
+
+  fclose(fid); 
+
+ [code, responseBody] = system(sprintf('curl -k -X POST -d @%s %s', respFile, submissionUrl)); %Peer     certificate patch 
+
+ %old code: responseBody = urlread(submissionUrl, 'post', params); 
+
+  response = loadjson(responseBody); 
+
 end
 
 function body = makePostBody(conf, email, token, parts)
@@ -103,6 +119,6 @@ end
 % Service configuration
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function submissionUrl = submissionUrl()
-  submissionUrl = 'https://www.coursera.org/api/onDemandProgrammingScriptSubmissionsController.v1';
+function submissionUrlist = submissionUrl()
+  submissionUrlist = 'https://www.coursera.org/api/onDemandProgrammingScriptSubmissionsController.v1';
 end

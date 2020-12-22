@@ -19,6 +19,8 @@ if (isempty(A.var) || isempty(V)), B = A; return; end;
 % and mapping between variables in A and B
 [B.var, mapB] = setdiff(A.var, V);
 
+
+
 % Check for empty resultant factor
 if isempty(B.var)
   error('Error: Resultant factor has empty scope');
@@ -38,6 +40,10 @@ indxB = AssignmentToIndex(assignments(:, mapB), B.card);
 % YOUR CODE HERE
 % Correctly populate the factor values of B
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- B.val = sum(A.val(indxB)); 
+% PNote: B structure here is a vector, based on the marginalized factor number and card 
+for i = 1:length(indxB)
+    B.val(i) = sum(A.val(indxB(i)));
+    
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

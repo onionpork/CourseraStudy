@@ -39,7 +39,14 @@ for i = 1:size(E, 1),
             % Hint: You might find it helpful to use IndexToAssignment
             %       and SetValueOfAssignment
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            IndexToAssignment 
+            
+            
+            assignment = IndexToAssignment(1:length(F(j).val), F(j).card);
+            for k = 1:size(assignment,1)
+                if assignment(k, indx) ~= x
+                    F(j) = SetValueOfAssignment(F(j),assignment(k,:), 0 );
+                end
+            end
             
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
