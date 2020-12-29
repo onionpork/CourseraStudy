@@ -27,10 +27,11 @@ end
 % Remember to renormalize the entries of M!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% M = struct('var', [], 'card', [], 'val', []); % Returns empty factor. Change this.
-Joint = ComputeJointDistribution(F);
-M = ObserveEvidence(Joint, E);
-M.val = M.val ./ sum(M.val);
-M = FactorMarginalization(M, setdiff(M.var, V));
+%  M = struct('var', [], 'card', [], 'val', []); % Returns empty factor. Change this.
+M = struct('var', [], 'card', [], 'val', []); % Returns empty factor. Change this.
+Joint= ComputeJointDistribution(F);
+M = ObserveEvidence(Joint,E);
+M.val = M.val ./sum(M.val);
+M = FactorMarginalization(M, setdiff(1:length(M.var),V));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

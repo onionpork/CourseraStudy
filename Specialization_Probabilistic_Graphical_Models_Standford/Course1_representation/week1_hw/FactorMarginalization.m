@@ -41,9 +41,10 @@ indxB = AssignmentToIndex(assignments(:, mapB), B.card);
 % Correctly populate the factor values of B
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PNote: B structure here is a vector, based on the marginalized factor number and card 
-for i = 1:length(indxB)
-    B.val(i) = sum(A.val(indxB(i)));
+for i = 1:length(B.val)
+    B.val(i) = sum(A.val(indxB == i));
     
 end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end

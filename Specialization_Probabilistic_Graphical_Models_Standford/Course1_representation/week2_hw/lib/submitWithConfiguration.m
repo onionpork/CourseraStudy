@@ -64,7 +64,6 @@ function response = submitParts(conf, email, token, parts)
   submissionUrl2 = submissionUrl();
   params = {'jsonBody', body};
   responseBody = urlread(submissionUrl2, 'post', params);
-%   [code, responseBody] = system(sprintf('curl -k -X POST -H "Content-Type: application/json"  -d ''%s'' %s', body, submissionUrl));
   response = loadjson(responseBody);
 end
 

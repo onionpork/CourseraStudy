@@ -1,7 +1,7 @@
 function submitWithConfiguration(conf)
   addpath('./lib/jsonlab');
 
-  Parts = parts(conf);
+  parts = parts(conf);
 
   fprintf('== Submitting solutions | %s...\n', conf.itemName);
 
@@ -19,7 +19,7 @@ function submitWithConfiguration(conf)
   end
 
   try
-    response = submitParts(conf, email, token, Parts);
+    response = submitParts(conf, email, token, parts);
   catch
     e = lasterror();
     fprintf( ...
@@ -61,10 +61,9 @@ end
 
 function response = submitParts(conf, email, token, parts)
   body = makePostBody(conf, email, token, parts);
-  submissionUrl2 = submissionUrl();
+  submissionUrl = submissionUrl();
   params = {'jsonBody', body};
-  responseBody = urlread(submissionUrl2, 'post', params);
-%   [code, responseBody] = system(sprintf('curl -k -X POST -H "Content-Type: application/json"  -d ''%s'' %s', body, submissionUrl));
+  responseBody = urlread(submissionUrl, 'post', params);
   response = loadjson(responseBody);
 end
 
